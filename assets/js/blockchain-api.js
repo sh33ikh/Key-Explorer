@@ -18,9 +18,26 @@ class BlockchainAPI {
     }
 
     static async getBitcoinBalances(addresses) {
-        const url = `https://blockchain.info/multiaddr?active=${addresses.join('|')}&api_key=${API_KEYS.BLOCKCHAIN_INFO}`;
-        
+        // Try BlockCypher API first
         try {
+            const balances = await Promise.all(addresses.map(async (address) => {
+                const url = `https://api.blockcypher.com/v1/btc/main/addrs/${address}/balance?token=${API_KEYS.BLOCKCYPHER}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                return {
+                    address: data.address,
+                    final_balance: data.final_balance / 100000000, // Convert satoshis to BTC
+                    n_tx: data.n_tx
+                };
+            }));
+            return balances;
+        } catch (error) {
+            console.error('Error fetching Bitcoin balances from BlockCypher:', error);
+        }
+
+        // Fallback to Blockchain.info API
+        try {
+            const url = `https://blockchain.info/multiaddr?active=${addresses.join('|')}&api_key=${API_KEYS.BLOCKCHAIN_INFO}`;
             const response = await fetch(url);
             const data = await response.json();
             
@@ -30,7 +47,7 @@ class BlockchainAPI {
                 n_tx: addr.n_tx
             }));
         } catch (error) {
-            console.error('Error fetching Bitcoin balances:', error);
+            console.error('Error fetching Bitcoin balances from Blockchain.info:', error);
             return [];
         }
     }
