@@ -9,9 +9,12 @@ class CryptoUtils {
         try {
             const keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'));
             const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
+            const compressedPublicKey = keyPair.publicKey.toString('hex');
+            const uncompressedPublicKey = secp256k1.getPublicKey(privateKey, false).slice(2);
             return {
                 address,
-                publicKey: keyPair.publicKey.toString('hex'),
+                publicKey: uncompressedPublicKey,
+                compressedPublicKey,
                 wif: keyPair.toWIF()
             };
         } catch (error) {
@@ -43,6 +46,13 @@ class CryptoUtils {
         } catch {
             return false;
         }
+    }
+
+    static async sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 }
 
