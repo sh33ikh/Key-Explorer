@@ -3,19 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Key Explorer - Bitcoin and Ethereum Private Key Database</title>
-    <meta name="description" content="Explore every Bitcoin and Ethereum private key. Advanced cryptographic key generation and real-time blockchain balance checking.">
+    <title>Advanced Crypto Key Explorer | Bitcoin & Ethereum Private Key Database</title>
+    <meta name="description" content="Explore every possible Bitcoin and Ethereum private key with real-time blockchain integration. Advanced cryptographic key generation and balance checking.">
+    <meta name="keywords" content="Bitcoin, Ethereum, private key, blockchain, cryptography, key explorer">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://your-github-username.github.io/advanced-key-explorer/">
+    <meta property="og:title" content="Advanced Crypto Key Explorer">
+    <meta property="og:description" content="Explore Bitcoin and Ethereum private keys with real-time blockchain data.">
+    <meta property="og:image" content="https://your-github-username.github.io/advanced-key-explorer/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://your-github-username.github.io/advanced-key-explorer/">
+    <meta name="twitter:card" content="summary_large_image">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Advanced Key Explorer",
+      "name": "Advanced Crypto Key Explorer",
       "description": "Explore every Bitcoin and Ethereum private key with real-time blockchain integration.",
       "url": "https://your-github-username.github.io/advanced-key-explorer/",
       "applicationCategory": "Cryptocurrency",
-      "operatingSystem": "Web"
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     }
     </script>
     <!-- Cryptographic Libraries -->
@@ -27,9 +39,9 @@
 </head>
 <body>
     <header>
-        <h1>Advanced Key Explorer</h1>
-        <h2>Every Bitcoin and Ethereum private key is on this website</h2>
-        <p>Yes, your private key is on this website too, but don't worry, nobody will ever find it.</p>
+        <h1>Advanced Crypto Key Explorer</h1>
+        <h2>Unveiling the Universe of Bitcoin and Ethereum Private Keys</h2>
+        <p>Every possible private key exists on this site. Explore responsibly.</p>
     </header>
 
     <nav>
@@ -39,7 +51,7 @@
 
     <main>
         <div class="search-section">
-            <input type="text" id="searchInput" placeholder="Search for a wallet address or private key">
+            <input type="text" id="searchInput" placeholder="Search by address, private key, or page number">
             <button id="searchBtn">Search</button>
         </div>
 
@@ -51,6 +63,8 @@
         </div>
 
         <div id="keyContainer" class="key-container"></div>
+
+        <div id="loadingIndicator" class="loading-indicator">Loading...</div>
     </main>
 
     <footer>
@@ -58,11 +72,13 @@
         <p>Donate ETH: 0x1Key1olgMwNrxP9sFdtTLxckeEPXwvKdZ</p>
         <a href="#about">About</a>
         <a href="#statistics">Statistics</a>
+        <a href="#disclaimer">Disclaimer</a>
     </footer>
 
     <script src="assets/js/api-keys.js"></script>
     <script src="assets/js/crypto-utils.js"></script>
     <script src="assets/js/blockchain-api.js"></script>
+    <script src="assets/js/ui-utils.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
