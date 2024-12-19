@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Key Explorer - Bitcoin and Ethereum Private Key Database</title>
+    <meta name="description" content="Explore every Bitcoin and Ethereum private key. Advanced cryptographic key generation and real-time blockchain balance checking.">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Advanced Key Explorer",
+      "description": "Explore every Bitcoin and Ethereum private key with real-time blockchain integration.",
+      "url": "https://your-github-username.github.io/advanced-key-explorer/",
+      "applicationCategory": "Cryptocurrency",
+      "operatingSystem": "Web"
+    }
+    </script>
+    <!-- Cryptographic Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bip39@3.0.4/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethereumjs-util@7.1.5/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib@6.1.0/dist/bitcoinjs-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/buffer@6.0.3/index.min.js"></script>
+    <script src="https://bundle.run/noble-secp256k1@1.2.14"></script>
+</head>
+<body>
+    <header>
+        <h1>Advanced Key Explorer</h1>
+        <h2>Every Bitcoin and Ethereum private key is on this website</h2>
+        <p>Yes, your private key is on this website too, but don't worry, nobody will ever find it.</p>
+    </header>
+
+    <nav>
+        <button id="btcExplorer" class="nav-btn active">Bitcoin Explorer</button>
+        <button id="ethExplorer" class="nav-btn">Ethereum Explorer</button>
+    </nav>
+
+    <main>
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="Search for a wallet address or private key">
+            <button id="searchBtn">Search</button>
+        </div>
+
+        <div class="key-navigation">
+            <button id="prevPage">Previous Page</button>
+            <span id="pageInfo">Page 1 of 904625697166532776746648320380374280100293470930272690489102837043110636675</span>
+            <button id="nextPage">Next Page</button>
+            <button id="randomPage">Random Page</button>
+        </div>
+
+        <div id="keyContainer" class="key-container"></div>
+    </main>
+
+    <footer>
+        <p>Donate BTC: 1Key1olgMwNrxP9sFdtTLxckeEPXwvKdZ</p>
+        <p>Donate ETH: 0x1Key1olgMwNrxP9sFdtTLxckeEPXwvKdZ</p>
+        <a href="#about">About</a>
+        <a href="#statistics">Statistics</a>
+    </footer>
+
+    <script src="assets/js/api-keys.js"></script>
+    <script src="assets/js/crypto-utils.js"></script>
+    <script src="assets/js/blockchain-api.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
+
