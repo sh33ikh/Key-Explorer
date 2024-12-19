@@ -71,22 +71,38 @@ function displayKeys(keys) {
         
         keyElement.innerHTML = `
             <div class="key-details">
-                <p><strong>Private Key:</strong> ${key.privateKey}</p>
-                <p><strong>Public Key:</strong> ${key.publicKey}</p>
-                <p><strong>Address:</strong> ${key.address}</p>
-                <p><strong>Balance:</strong> ${key.balance} ${currentMode === 'bitcoin' ? 'BTC' : 'ETH'}</p>
-                ${currentMode === 'bitcoin' ? `<p><strong>Transactions:</strong> ${key.transactions || 0}</p>` : ''}</div>
+                <p><strong>Private Key:</strong> <span class="copyable" data-copy="${key.privateKey}">${key.privateKey}</span></p>
+                <p><strong>Public Key:</strong> <span class="copyable" data-copy="${key.publicKey}">${key.publicKey}</span></p>
+                <p><strong>Address:</strong> <span class="copyable" data-copy="${key.address}">${key.address}</span></p>
+                <p><strong>Balance:</strong> ${UIUtils.formatBalance(key.balance, currentMode === 'bitcoin' ? 'BTC' : 'ETH')}</p>
+                ${currentMode === 'bitcoin' ? `<p><strong>Transactions:</strong> ${key.transactions || 0}</p>` : ''}
+            </div>
         `;
         
         container.appendChild(keyElement);
     });
+
+    // Add click event listeners for copying
+    document.querySelectorAll('.copyable').forEach(el => {
+        el.addEventListener('click', () => {
+            UIUtils.copyToClipboard(el.dataset.copy);
+        });
+    });
 }
 
 async function updatePage() {
+    UIUtils.showLoading();
     document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${MAX_PAGE}`;
-    const keys = await generateKeysForPage(currentPage);
-    const keysWithBalances = await checkBalances(keys);
-    displayKeys(keysWithBalances);
+    try {
+        const keys = await generateKeysForPage(currentPage);
+        const keysWithBalances = await checkBalances(keys);
+        displayKeys(keysWithBalances);
+    } catch (error) {
+        console.error('Error updating page:', error);
+        UIUtils.showError('An error occurred while fetching data. Please try again.');
+    } finally {
+        UIUtils.hideLoading();
+    }
 }
 
 function setMode(mode) {
@@ -128,12 +144,33 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
         currentPage = page;
         updatePage();
     } else {
-        // Search by address
-        // Implement address search logic here
-        console.log('Address search not implemented yet');
+        // Search by address or page number
+        if (!isNaN(searchValue) && BigInt(searchValue) <= MAX_PAGE) {
+            currentPage = parseInt(searchValue);
+            updatePage();
+        } else {
+            // Implement address search logic here
+            UIUtils.showError('Address search not implemented yet');
+        }
     }
 });
 
 // Initial load
 updatePage();
+
+// Add event listener for keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        document.getElementById('prevPage').click();
+    } else if (e.key === 'ArrowRight') {
+        document.getElementById('nextPage').click();
+    }
+});
+
+// Implement infinite scrolling
+window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        document.getElementById('nextPage').click();
+    }
+});
 
